@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage reminders for your tasks and voice notes">
+  <meta property="og:title" content="Voice Notes - Reminders">
+  <meta property="og:description" content="Manage reminders for your tasks and voice notes">
+  <title>Reminders - Voice Notes</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container container">
+      <div class="header-left">
+        <button id="menu-toggle" class="btn-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <span class="sr-only">Toggle menu</span>
+        </button>
+        <h1 class="app-title">Reminders</h1>
+      </div>
+      
+      <div class="header-actions">
+        <button id="search-toggle" class="btn-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span class="sr-only">Search</span>
+        </button>
+        <button id="language-toggle" class="btn-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span class="sr-only">Toggle language</span>
+        </button>
+        <button id="user-profile" class="btn-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span class="sr-only">User menu</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Search Bar -->
+    <div id="search-container" class="search-container">
+      <div class="container">
+        <div class="search-input-container">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input id="search-input" type="text" class="search-input" placeholder="Search reminders...">
+          <button id="search-clear" class="btn-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <span class="sr-only">Clear search</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar desktop">
+      <div class="sidebar-content">
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="/" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                <span>All Voice Notes</span>
+              </a>
+            </li>
+            <li>
+              <a href="/tasks" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                <span>Tasks</span>
+              </a>
+            </li>
+            <li>
+              <a href="/reminders" class="nav-link active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <span>Reminders</span>
+              </a>
+            </li>
+            <li>
+              <a href="/archived" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20.91 8.84 8.56 2.23a1.93 1.93 0 0 0-1.81 0L3.1 4.13a2.12 2.12 0 0 0-.05 3.69l12.22 6.93a2.48 2.48 0 0 0 2.46 0L21.1 12.5a2 2 0 0 0-.19-3.66Z"></path><path d="M3.09 8.84v12.85a1.5 1.5 0 0 0 1.5 1.5c.36 0 .7-.13.96-.36L8.75 21"></path><path d="m21.15 8.52.68 3.12a1 1 0 0 1-.33.96 1 1 0 0 1-.94.24L17 12"></path></svg>
+                <span>Archive</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <section class="reminders-section">
+          <div class="reminders-header">
+            <h2 class="reminders-title">Reminders</h2>
+            <div class="reminders-actions">
+              <button id="create-reminder" class="primary-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                New Reminder
+              </button>
+              <div class="tabs">
+                <button class="tab-button active" data-tab="today">Today</button>
+                <button class="tab-button" data-tab="upcoming">Upcoming</button>
+                <button class="tab-button" data-tab="past">Past</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- New Reminder Form -->
+          <div id="new-reminder-form" class="new-reminder-form" style="display: none;">
+            <div class="form-content">
+              <div class="form-group">
+                <label for="reminder-title">Title</label>
+                <input type="text" id="reminder-title" class="form-input" placeholder="Reminder title...">
+              </div>
+              <div class="form-group">
+                <label for="reminder-description">Description (optional)</label>
+                <textarea id="reminder-description" class="form-textarea" placeholder="Add details..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="reminder-datetime">Date and Time</label>
+                <input type="datetime-local" id="reminder-datetime" class="form-input">
+              </div>
+              <div class="form-actions">
+                <button id="save-reminder" class="primary-button">Save</button>
+                <button id="cancel-reminder" class="secondary-button">Cancel</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Today Reminders -->
+          <div id="today-reminders" class="reminders-container active">
+            <div class="reminders-list">
+              <div class="empty-message">Loading today's reminders...</div>
+            </div>
+          </div>
+          
+          <!-- Upcoming Reminders -->
+          <div id="upcoming-reminders" class="reminders-container" style="display: none;">
+            <div class="reminders-list">
+              <div class="empty-message">Loading upcoming reminders...</div>
+            </div>
+          </div>
+          
+          <!-- Past Reminders -->
+          <div id="past-reminders" class="reminders-container" style="display: none;">
+            <div class="reminders-list">
+              <div class="empty-message">Loading past reminders...</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
